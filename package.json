@@ -1,0 +1,23 @@
+{
+  "name": "weather-scarf",
+  "version": "1.0.0",
+  "description": "REST API for generating patterns for a weather scarf based off of cojorado.com/knitting/pattern-brioche-weather-scarf/",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kate Bierbaum",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.10.1",
+    "csv-parse": "0.0.6",
+    "express": "^4.11.0",
+    "express-session": "^1.10.1",
+    "follow-redirects": "0.0.3",
+    "morgan": "^1.5.1",
+    "request": "^2.51.0"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5"
+  }
+}

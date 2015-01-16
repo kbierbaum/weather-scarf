@@ -10,11 +10,12 @@ var scarf = require('./models/scarf');
 var weather = require('./models/weather');
 
 var app = module.exports = express();
+app.set('port', (process.env.PORT || 5000));
+app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 
 app.get('/scarf', function(req, res) {
-	console.log(req);
-	var weather = new WeatherService('Boulder', 'CO', '2014');
+	var weather = new WeatherService('Annapolis', 'MD', '2014');
 	weather.getWeather(function(data) {
 		var scarf = new Scarf(data, 10, 70, 160);
 		scarf.createScarf();
@@ -23,11 +24,6 @@ app.get('/scarf', function(req, res) {
 	
 });
 
-var server = app.listen(3000, function () {
-
-  var host = server.address().address
-  var port = server.address().port
-
-  console.log('Example app listening at http://%s:%s', host, port)
-
-})
+app.listen(app.get('port'), function() {
+  console.log("Node app is running at localhost:" + app.get('port'));
+});

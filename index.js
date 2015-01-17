@@ -15,7 +15,14 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 
 app.get('/scarf', function(req, res) {
-	var weather = new WeatherService('Annapolis', 'MD', '2014');
+	var city = 'Boulder';
+	var state = 'CO';
+	if (req.query.city && req.query.state) {
+		city = req.query.city;
+		state = req.query.state;
+	}
+	var year = req.query.year || '2014';
+	var weather = new WeatherService(city, state, year);
 	weather.getWeather(function(data) {
 		var scarf = new Scarf(data, 10, 70, 160);
 		scarf.createScarf();

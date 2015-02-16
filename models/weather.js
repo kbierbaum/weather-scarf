@@ -1,16 +1,32 @@
+var config = require('../config')
 var request = require('request');
 var csv = require('csv-parse');
 
-WeatherService = function(city, state, year){
-	this.city = city;
-	this.state = state;
+WeatherService = function(zip, year){
+	this.zip = zip;
 	this.year = year;
 
-    this.getWeather = function(callback) {
-    	var lines = [];
-    	var url = 'http://wunderground.com/history/city/' + this.city + '/' + this.year +'/1/1/CustomHistory.html?dayend=31&monthend=12&yearend=' 
-			+ this.year + '&req_city=' + this.city + '&req_state=' + this.state + '&req_statename=' + this.state + '&MR=1&format=1';
+	this.getAirportCode = function(airportCallback, callback) {
+		var url = 'http://api.wunderground.com/api/' + config.wunderground.apikey 
+			+ '/geolookup/q/' + this.zip + '.json';
+		request(url, function (error, response, body) {
+  			if (!error && response.statusCode == 200) {
+    			var response = JSON.parse(body);
+    			airportCallback(response.location.nearby_weather_stations.airport.station[0].icao, callback);
+  			}
+		});
+	}
 
+    this.getWeather = function(callback) {
+    	this.getAirportCode(this.airportCallback, callback);
+	
+	}
+
+	this.airportCallback = function(airportCode, callback) {
+		var lines = [];
+		var url = 'http://wunderground.com/history/airport/' + airportCode + '/2014' 
+			+ '/1/1/CustomHistory.html?dayend=31&monthend=12&yearend=2014' 
+			+ '&MR=1&format=1';
 		var parser = csv({});
 		parser.on('readable', function(){
 			while(record = parser.read()){
@@ -30,7 +46,6 @@ WeatherService = function(city, state, year){
 		});
 
 		request(url).pipe(parser);
-	
 	}
 }
 

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
-  },  
+  },
   "author": "Kate Bierbaum",
   "license": "ISC",
   "dependencies": {
@@ -14,6 +14,7 @@
     "express": "^4.11.0",
     "express-session": "^1.10.1",
     "follow-redirects": "0.0.3",
+    "jade": "^1.9.2",
     "morgan": "^1.5.1",
     "request": "^2.51.0"
   },

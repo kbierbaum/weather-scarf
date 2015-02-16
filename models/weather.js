@@ -1,4 +1,3 @@
-var config = require('../config')
 var request = require('request');
 var csv = require('csv-parse');
 
@@ -7,7 +6,7 @@ WeatherService = function(zip, year){
 	this.year = year;
 
 	this.getAirportCode = function(airportCallback, callback) {
-		var url = 'http://api.wunderground.com/api/' + config.wunderground.apikey 
+		var url = 'http://api.wunderground.com/api/' + process.env.WEATHERAPIKEY 
 			+ '/geolookup/q/' + this.zip + '.json';
 		request(url, function (error, response, body) {
   			if (!error && response.statusCode == 200) {

@@ -9,12 +9,19 @@ var bodyParser = require('body-parser');
 var scarf = require('./models/scarf');
 var weather = require('./models/weather');
 var jade = require('jade');
+var path = require('path');
+var lessMiddleware = require('less-middleware');
 
 var app = module.exports = express();
 app.set('port', (process.env.PORT || 5000));
+app.use(lessMiddleware(path.join(__dirname, '/public'), {
+	force: true
+}));
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.set('view engine', 'jade');
+
+
 
 app.get('/scarf', function(req, res) {
 	var zip = '80303';
@@ -32,7 +39,10 @@ app.get('/scarf', function(req, res) {
 });
 
 app.get('/', function (req, res) {
-	res.render('index', { title: 'Weather Scarf', message: 'Weather scarves are awesome!'});
+	res.render('index', { 
+		title: 'Weather Scarf', 
+		message: 'Weather scarves are awesome!'
+	});
 })
 
 app.listen(app.get('port'), function() {

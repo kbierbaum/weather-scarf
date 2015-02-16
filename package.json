@@ -15,6 +15,8 @@
     "express-session": "^1.10.1",
     "follow-redirects": "0.0.3",
     "jade": "^1.9.2",
+    "less": "^2.4.0",
+    "less-middleware": "^1.0.4",
     "morgan": "^1.5.1",
     "request": "^2.51.0"
   },
